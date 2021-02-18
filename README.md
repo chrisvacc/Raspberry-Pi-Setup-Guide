@@ -94,9 +94,9 @@ When prompted, press `y` and hit `ENTER` to write the latest bootloader to the m
 Remove the Arch Linux TarBall from the home directory
 
 `mv ~/ArchLinuxARM-aarch64-latest.tar.gz ~/Downloads`
+
 or
+
 `rm ~/ArchLinuxARM-aarch64-latest.tar.gz`
 
-Copyright ©2009-2020 Arch Linux ARM
-The registered trademark Linux® is used pursuant to a sublicense from LMI, the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.
-The Arch Linux™ name and logo are used under permission of the Arch Linux Project Lead.
+
