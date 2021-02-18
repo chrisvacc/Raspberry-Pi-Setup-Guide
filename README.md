@@ -1,3 +1,62 @@
+
+About
+Platforms
+Packages
+Forum
+Wiki
+Donate
+Rock64
+Overview
+Installation
+Wiki
+Install to a micro SD card
+Replace sdX in the following instructions with the device name for the SD card as it appears on your computer.
+
+Zero the beginning of the SD card:
+dd if=/dev/zero of=/dev/sdX bs=1M count=32
+Start fdisk to partition the SD card:
+fdisk /dev/sdX
+At the fdisk prompt, create the new partition:
+Type o. This will clear out any partitions on the drive.
+Type p to list partitions. There should be no partitions left.
+Type n, then p for primary, 1 for the first partition on the drive, 32768 for the first sector, and then press ENTER to accept the default last sector.
+Write the partition table and exit by typing w.
+Create the ext4 filesystem:
+mkfs.ext4 /dev/sdX1
+Mount the filesystem:
+mkdir root
+mount /dev/sdX1 root
+Download and extract the root filesystem (as root, not via sudo):
+wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
+bsdtar -xpf ArchLinuxARM-aarch64-latest.tar.gz -C root
+Download the boot.scr script for U-Boot and place it in the /boot directory:
+wget http://os.archlinuxarm.org/os/rockchip/boot/rock64/boot.scr -O root/boot/boot.scr
+Unmount the partition:
+umount root
+Download and install the U-Boot bootloader:
+wget http://os.archlinuxarm.org/os/rockchip/boot/rock64/rksd_loader.img
+wget http://os.archlinuxarm.org/os/rockchip/boot/rock64/u-boot.itb
+dd if=rksd_loader.img of=/dev/sdX seek=64 conv=notrunc
+dd if=u-boot.itb of=/dev/sdX seek=16384 conv=notrunc
+Insert the micro SD card into the Rock64, connect ethernet, and apply 5V power.
+Use the serial console or SSH to the IP address given to the board by your router.
+Login as the default user alarm with the password alarm.
+The default root password is root.
+HDMI video is not yet supported in the mainline kernel.
+Initialize the pacman keyring and populate the Arch Linux ARM package signing keys:
+pacman-key --init
+pacman-key --populate archlinuxarm
+Install the U-Boot package
+Remove the boot.scr file manually downloaded previously:
+rm /boot/boot.scr
+Install the U-Boot package:
+pacman -Sy uboot-rock64
+When prompted, press y and hit enter to write the latest bootloader to the micro SD card.
+Copyright ©2009-2020 Arch Linux ARM
+The registered trademark Linux® is used pursuant to a sublicense from LMI, the exclusive licensee of Linus Torvalds, owner of the mark on a world-wide basis.
+The Arch Linux™ name and logo are used under permission of the Arch Linux Project Lead.
+
+
 # Raspberry Pi Setup Guide
 
 A really opionionated guide how to setup every version of a Raspberry Pi with Arch Linux including NTP, Wi-Fi, SSH,
